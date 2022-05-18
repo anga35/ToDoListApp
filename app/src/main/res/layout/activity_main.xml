@@ -61,9 +61,8 @@
         android:paddingHorizontal="35dp"
 
         android:text="Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit. Interdum dictum tempus,
-         interdum at dignissim metus. Ultricies sed nunc."
-
+         consectetur adipiscing elit.Interdum dictum tempus,interdum at dignissim metus.Ultricies sed nunc."
+        android:letterSpacing="0.06"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -89,7 +88,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Get Start"
             android:textAllCaps="false"
-
+android:letterSpacing="0.06"
             android:textColor="@color/white"
             android:paddingHorizontal="70dp"
             >
