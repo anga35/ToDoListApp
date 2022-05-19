@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/welcome_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/todo_icon_welcome"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="136dp"
+
+        ></ImageView>
+
+    <TextView
+        android:id="@+id/tvl_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal|top"
+        android:textSize="16sp"
+        android:height="20sp"
+        android:text="Welcome to"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/welcome_icon"></TextView>
+
+    <TextView
+        android:id="@+id/tvl_our_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal|top"
+        android:textSize="22sp"
+        android:text="OUR REMINDER"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/tvl_welcome"></TextView>
+
+    <TextView
+        android:id="@+id/tvl_body_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="#BD000000"
+        android:gravity="center_horizontal|top"
+        android:textSize="12sp"
+        android:layout_marginTop="13dp"
+        android:paddingHorizontal="35dp"
+
+        android:text="Lorem ipsum dolor sit amet,
+         consectetur adipiscing elit.Interdum dictum tempus,interdum at dignissim metus.Ultricies sed nunc."
+        android:letterSpacing="0.06"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/tvl_our_reminder"></TextView>
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvl_body_msg"
+
+        >
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_get_started"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/btn_drawable"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Get Start"
+            android:textAllCaps="false"
+            android:letterSpacing="0.06"
+            android:textColor="@color/white"
+            android:paddingHorizontal="70dp"
+            >
+
+
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </FrameLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

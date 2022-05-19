@@ -4,104 +4,182 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+
     tools:context=".MainActivity">
 
-   <ImageView
-       android:id="@+id/welcome_icon"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:background="@drawable/todo_icon_welcome"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintLeft_toLeftOf="parent"
-       app:layout_constraintRight_toRightOf="parent"
-       android:layout_marginTop="136dp"
+    <RelativeLayout
+        android:id="@+id/ll_profile_bg"
+        android:layout_width="match_parent"
+        android:layout_height="307dp"
 
-       ></ImageView>
+        android:background="@color/background_color"
 
-    <TextView
-        android:id="@+id/tvl_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/black"
-        android:gravity="center_horizontal|top"
-        android:textSize="16sp"
-        android:height="20sp"
-        android:text="Welcome to"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        app:layout_constraintTop_toBottomOf="@id/welcome_icon"></TextView>
-
-    <TextView
-        android:id="@+id/tvl_our_reminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/black"
-        android:gravity="center_horizontal|top"
-        android:textSize="22sp"
-        android:text="OUR REMINDER"
-
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/tvl_welcome"></TextView>
-
-    <TextView
-        android:id="@+id/tvl_body_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:textColor="#BD000000"
-        android:gravity="center_horizontal|top"
-        android:textSize="12sp"
-        android:layout_marginTop="13dp"
-        android:paddingHorizontal="35dp"
-
-        android:text="Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit.Interdum dictum tempus,interdum at dignissim metus.Ultricies sed nunc."
-        android:letterSpacing="0.06"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/tvl_our_reminder"></TextView>
-
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvl_body_msg"
-
-        >
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_get_started"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:background="@drawable/btn_drawable"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Get Start"
-            android:textAllCaps="false"
-android:letterSpacing="0.06"
-            android:textColor="@color/white"
-            android:paddingHorizontal="70dp"
-            >
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/imv_profile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="70dp">
 
-        </androidx.appcompat.widget.AppCompatButton>
+                    <ImageView
 
-    </FrameLayout>
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/fitz" />
+
+                </androidx.cardview.widget.CardView>
 
 
+                <ImageView
+                    android:id="@+id/imv_profile_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_border"
+
+                    ></ImageView>
+            </RelativeLayout>
 
 
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imv_profile_border"
+                android:layout_marginTop="6dp"
+                android:height="20sp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_horizontal|top"
+                android:letterSpacing="0.05"
+                android:text="Welcome to"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                ></TextView>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imv_profile_border"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:height="20sp"
+                android:fontFamily="@font/poppins"
+                android:letterSpacing="0.05"
+                android:text="dayodele"
+                android:textColor="@color/primary"
+                android:textSize="10sp"
+
+                ></TextView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins"
+                android:letterSpacing="0.05"
+                android:text="Log Out"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:backgroundTint="#F4C27F"
+                app:cornerRadius="30dp"></com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tvl_taskList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/poppins"
+        android:letterSpacing="0.06"
+        android:text="Task List"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_profile_bg"></TextView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="8dp"
+
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvl_taskList">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/poppins"
+                    android:letterSpacing="0.06"
+                    android:text="Task List"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"></TextView>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/plus_circle"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="23dp"
+                    ></ImageView>
+
+            </RelativeLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+tools:listitem="@layout/item_task"
+    tools:itemCount="10"
+    ></androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
