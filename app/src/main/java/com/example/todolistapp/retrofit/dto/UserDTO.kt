@@ -1,4 +1,4 @@
-package com.example.todolistapp.retrofit
+package com.example.todolistapp.retrofit.dto
 
 import com.example.todolistapp.model.Task
 

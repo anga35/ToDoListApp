@@ -2,6 +2,8 @@ package com.example.todolistapp.retrofit
 
 import com.example.todolistapp.model.Task
 import com.example.todolistapp.model.User
+import com.example.todolistapp.retrofit.dto.TaskDTO
+import com.example.todolistapp.retrofit.dto.UserDTO
 import com.example.todolistapp.utils.EntityMapper
 
 
