@@ -1,7 +1,8 @@
-package com.example.todolistapp
+package com.example.todolistapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.todolistapp.R
 
 class RegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
