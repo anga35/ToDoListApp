@@ -85,7 +85,7 @@
             android:layout_marginTop="90dp"
             android:background="@drawable/btn_drawable"
             android:fontFamily="@font/poppins_bold"
-            android:text="Get Start"
+            android:text="Get Started"
             android:textAllCaps="false"
             android:letterSpacing="0.06"
             android:textColor="@color/white"

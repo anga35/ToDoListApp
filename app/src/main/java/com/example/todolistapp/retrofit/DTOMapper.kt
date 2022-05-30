@@ -5,10 +5,12 @@ import com.example.todolistapp.model.User
 import com.example.todolistapp.retrofit.dto.TaskDTO
 import com.example.todolistapp.retrofit.dto.UserDTO
 import com.example.todolistapp.utils.EntityMapper
+import javax.inject.Inject
 
 
-
-class DTOMapper {
+class DTOMapper @Inject
+constructor()
+{
 
     class TaskDTOMapper : EntityMapper<TaskDTO, Task> {
         override fun mapToDomain(entity: TaskDTO): Task {
