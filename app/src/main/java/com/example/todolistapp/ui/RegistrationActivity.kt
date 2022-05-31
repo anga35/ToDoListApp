@@ -1,8 +1,10 @@
 package com.example.todolistapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -14,10 +16,7 @@ import com.example.todolistapp.retrofit.dto.UserDTO
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_registration.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -27,8 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var todoRetrofit: TodoRetrofit
+
 
 
     private  val viewModel:RegisterationViewModel by viewModels()
@@ -40,6 +38,11 @@ viewModel.controller.observe(this, Observer { response->
 
         if(response.isSuccessful){
             Log.d("Response Message","SUCCESS")
+            Toast.makeText(this,"Login successful",Toast.LENGTH_SHORT).show()
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(1500)
+                startActivity(Intent(this@RegistrationActivity,SignInActivity::class.java))
+            }
         }
         else{
             Log.d("Response Message","Failure")

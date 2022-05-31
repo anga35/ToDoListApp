@@ -1,4 +1,8 @@
 package com.example.todolistapp.retrofit.dto
 
-class LoginDTO(email:String,password:String) {
+import com.google.gson.annotations.SerializedName
+
+class LoginDTO(
+    @SerializedName(value = "email")
+    val email:String,val password:String) {
 }

@@ -1,3 +1,3 @@
 package com.example.todolistapp.model
 
-class Token(token:String)
+class Token(val token:String)
