@@ -9,28 +9,30 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object SharedPreferencesModule {
 
-    @ActivityScoped
+    @Singleton
     @Provides
-    fun provideSharedPreference(@ActivityContext context: Context):SharedPreferences{
+    fun provideSharedPreference(@ApplicationContext context: Context):SharedPreferences{
 
-        val activity=context as Activity
 
-        return activity.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME,Context.MODE_PRIVATE)
+
+        return context.getSharedPreferences(Constants.SHARED_PREFERENCE_NAME,Context.MODE_PRIVATE)
 
 
 
     }
 
 
-    @ActivityScoped
+    @Singleton
     @Provides
     fun providesEditor(sharedPreferences: SharedPreferences):SharedPreferences.Editor{
        return( sharedPreferences.edit())

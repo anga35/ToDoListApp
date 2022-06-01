@@ -1,4 +1,4 @@
-package com.example.todolistapp.ui
+package com.example.todolistapp.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,22 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import com.example.todolistapp.R
-import com.example.todolistapp.RegisterationViewModel
-import com.example.todolistapp.retrofit.TodoRetrofit
 import com.example.todolistapp.retrofit.dto.SignupDTO
-import com.example.todolistapp.retrofit.dto.UserDTO
-import com.google.gson.Gson
+import com.example.todolistapp.ui.RegisterationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_registration.*
 import kotlinx.coroutines.*
-import okhttp3.MediaType
-import okhttp3.RequestBody
-import org.json.JSONObject
-import retrofit2.awaitResponse
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity() {
@@ -29,7 +20,7 @@ class RegistrationActivity : AppCompatActivity() {
 
 
 
-    private  val viewModel:RegisterationViewModel by viewModels()
+    private  val viewModel: RegisterationViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -41,7 +32,7 @@ viewModel.controller.observe(this, Observer { response->
             Toast.makeText(this,"Login successful",Toast.LENGTH_SHORT).show()
             CoroutineScope(Dispatchers.IO).launch {
                 delay(1500)
-                startActivity(Intent(this@RegistrationActivity,SignInActivity::class.java))
+                startActivity(Intent(this@RegistrationActivity, SignInActivity::class.java))
             }
         }
         else{
