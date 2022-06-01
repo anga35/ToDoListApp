@@ -7,11 +7,13 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.todolistapp.Constants
@@ -78,6 +80,7 @@ class SignInActivity : AppCompatActivity() {
                 catch (e:Exception){
                     Toast.makeText(this@SignInActivity,
                         "Something went wrong,check your connection and try again",Toast.LENGTH_SHORT).show()
+                    ll_signIn_loading.visibility= View.GONE
                 }
 
 
@@ -85,7 +88,7 @@ class SignInActivity : AppCompatActivity() {
 
             } else {
                 Log.d("Failed", "User data failed")
-
+                ll_signIn_loading.visibility= View.GONE
             }
 
 
@@ -96,6 +99,7 @@ class SignInActivity : AppCompatActivity() {
             var email = et_sign_in_email.text.toString()
             var password = et_sign_in_password.text.toString()
             if (validateLoginDetails(email, password)) {
+                ll_signIn_loading.visibility= View.VISIBLE
                 viewModel.loginUser(LoginDTO(email, password))
             }
 
@@ -114,6 +118,7 @@ class SignInActivity : AppCompatActivity() {
     fun downloadUserData(pictureUrl:String,user:User){
         Glide.with(this)
             .asBitmap()
+            .apply(RequestOptions().override(100,100))
             .load(pictureUrl)
             .into(object: CustomTarget<Bitmap>() {
                 override fun onResourceReady(

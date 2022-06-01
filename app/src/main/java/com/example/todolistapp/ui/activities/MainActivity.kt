@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                         })
+
                     
                 }
                 is UserDataState.NewUser->{
