@@ -8,7 +8,7 @@ object Constants {
     val SHARED_PREF_NO_CACHE="SHARED_PREFERENCE_NO_CACHE"
     val SHARED_PREF_USER_DATA="SHARED_PREFERENCE_USER_DATA"
 
-    var userDto:UserDTO?=null
+
 
     val RQ_READ_WRITE_PERMISSION=1
 

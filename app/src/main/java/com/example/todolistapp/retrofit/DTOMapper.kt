@@ -12,7 +12,7 @@ class DTOMapper @Inject
 constructor()
 {
 
-    class TaskDTOMapper : EntityMapper<TaskDTO, Task> {
+   inner class TaskDTOMapper : EntityMapper<TaskDTO, Task> {
         override fun mapToDomain(entity: TaskDTO): Task {
             return Task(
                 id = entity.id,
@@ -30,7 +30,7 @@ constructor()
 
 
 
-    class UserDTOMapper : EntityMapper<UserDTO, User> {
+    inner class UserDTOMapper : EntityMapper<UserDTO, User> {
         override fun mapToDomain(entity: UserDTO): User {
             return User(
                 email = entity.email,
