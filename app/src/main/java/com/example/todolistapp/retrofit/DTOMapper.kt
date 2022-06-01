@@ -36,7 +36,7 @@ constructor()
                 email = entity.email,
                 fullname = entity.fullname,
                 profilePicture = entity.profilePicture,
-                tasks = entity.tasks
+                tasks = entity.tasks!!
 
             )
 

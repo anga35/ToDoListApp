@@ -19,7 +19,7 @@ interface TodoRetrofit {
     fun loginUser(@Body loginDTO: LoginDTO):Call<Token>
 
 
-    @GET("user/get-user")
+    @GET("user/get-user/")
     fun getUser(@Header("AUTHORIZATION") tokenVal:String):Call<UserDTO>
 
 

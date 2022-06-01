@@ -1,37 +1,67 @@
 package com.example.todolistapp.ui
 
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.example.todolistapp.Constants
 import com.example.todolistapp.R
-import com.example.todolistapp.RegisterationViewModel
 import com.example.todolistapp.retrofit.dto.LoginDTO
 import com.example.todolistapp.utils.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import okhttp3.internal.userAgent
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {
 
-
+@Inject
+lateinit var sharedPrefEditor: SharedPreferences.Editor
  private val viewModel:SignInViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+var token=""
 
-
-        viewModel.responseLiveData.observe(this, Observer {
+        viewModel.tokenLiveData.observe(this, Observer {
             response->
             if(response.isSuccessful){
                 Log.d("Success",response.body()!!.toString())
+                token=response.body()!!.token
+                viewModel.getUserData(response.body()!!.token)
             }
             else{
                 Log.d("Failed", response.body()!!.toString())
 
             }
+
+
+        })
+
+        viewModel.userLiveData.observe(this, Observer {
+            response->
+
+            if(response.isSuccessful){
+                Log.d("Success","User data received")
+                Constants.userDto=response.body()
+
+                sharedPrefEditor.putString(Constants.SHARED_PREF_TOKEN,token)
+                sharedPrefEditor.apply()
+
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
+            }
+            else{
+                Log.d("Failed", "User data failed")
+
+            }
+
+
 
 
         })
@@ -47,6 +77,14 @@ class SignInActivity : AppCompatActivity() {
 
 
         }
+
+        tv_sign_up_intent.setOnClickListener {
+
+            startActivity(Intent(this,RegistrationActivity::class.java))
+            finish()
+
+        }
+
 
 
     }
