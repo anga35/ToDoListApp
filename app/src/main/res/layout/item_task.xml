@@ -4,16 +4,17 @@
     android:layout_height="wrap_content">
 
 <ImageView
+    android:id="@+id/imv_task_check"
     android:layout_width="17dp"
     android:layout_height="17dp"
-    android:src="@drawable/checked_task"
+    android:src="@drawable/unchecked_task"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="20dp"></ImageView>
 
 
 
     <TextView
-
+        android:id="@+id/tv_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

@@ -9,17 +9,22 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.todolistapp.Constants
 import com.example.todolistapp.R
+import com.example.todolistapp.adapters.TaskOnClickListener
+import com.example.todolistapp.adapters.TaskRecyclerAdapter
+import com.example.todolistapp.model.Task
 import com.example.todolistapp.model.User
 import com.example.todolistapp.ui.MainViewModel
 import com.example.todolistapp.utils.UserDataState
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.internal.wait
 import javax.inject.Inject
 
 
@@ -62,6 +67,17 @@ class MainActivity : AppCompatActivity() {
 
                         })
 
+                        val filteredTask=user.tasks.filter { task -> !task.isDone  }
+                        rv_tasks.layoutManager=LinearLayoutManager(this)
+                        val adapter=TaskRecyclerAdapter(this,filteredTask)
+                        adapter.taskOnClickListener=object:TaskOnClickListener{
+                            override fun onClick(task: Task) {
+                                task.isDone= !task.isDone
+                                adapter.notifyDataSetChanged()
+                            }
+
+                        }
+                        rv_tasks.adapter=adapter
                     
                 }
                 is UserDataState.NewUser->{

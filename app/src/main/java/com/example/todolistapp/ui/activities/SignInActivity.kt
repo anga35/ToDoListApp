@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
@@ -26,6 +27,10 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -51,14 +56,24 @@ class SignInActivity : AppCompatActivity() {
 
 
         viewModel.tokenLiveData.observe(this, Observer { response ->
-            if (response.isSuccessful) {
-                Log.d("Success", response.body()!!.toString())
-                token = response.body()!!.token
-                viewModel.getUserData(response.body()!!.token)
-            } else {
-                Log.d("Failed", response.body()!!.toString())
+            if(response!=null){
+
+                if (response.isSuccessful) {
+                    Log.d("Success", response.body()!!.toString())
+                    token = response.body()!!.token
+                    viewModel.getUserData(response.body()!!.token)
+                } else {
+                    ll_signIn_loading.visibility=View.GONE
+                    Log.d("Failed", response.body()!!.toString())
+
+                }
 
             }
+            else{
+                showErrorMessage("Something went wrong,check your connection and try again")
+                ll_signIn_loading.visibility=View.GONE
+            }
+
 
 
         })
@@ -75,11 +90,16 @@ class SignInActivity : AppCompatActivity() {
 
                 val picture=userDto!!.profilePicture
                 try{
-                    downloadUserData(picture,user)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        downloadUserData(picture,user)
+                        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+                        finish()
+                    }
+
                 }
                 catch (e:Exception){
-                    Toast.makeText(this@SignInActivity,
-                        "Something went wrong,check your connection and try again",Toast.LENGTH_SHORT).show()
+                    showErrorMessage("Something went wrong,check your connection and try again")
+                   Log.d("DOWNLOAD_ERROR",e.stackTraceToString())
                     ll_signIn_loading.visibility= View.GONE
                 }
 
@@ -115,50 +135,45 @@ class SignInActivity : AppCompatActivity() {
 
 
     }
-    fun downloadUserData(pictureUrl:String,user:User){
-        Glide.with(this)
+    private fun downloadUserData(pictureUrl:String, user:User){
+        val futureTarget=Glide.with(this)
             .asBitmap()
             .apply(RequestOptions().override(100,100))
             .load(pictureUrl)
-            .into(object: CustomTarget<Bitmap>() {
-                override fun onResourceReady(
-                    resource: Bitmap,
-                    transition: Transition<in Bitmap>?
-                ) {
-                    val byte=ByteArrayOutputStream()
-                    resource.compress(Bitmap.CompressFormat.PNG,90,byte)
-                    var files=ContextCompat.getExternalFilesDirs(this@SignInActivity,null)
-                    var baseDir = files[0].path
-                    var profilePicDir=File(baseDir+"/Profile_picture")
+            .submit(100,100)
+        val bitmap=futureTarget.get()
+       val savedFile= storeImageToDevice(bitmap)
 
-                    if(!profilePicDir.exists()){
-                        profilePicDir.mkdir()
-                    }
-                    var saveDir=File(profilePicDir.path+"/picture.jpg")
 
-                    var fo=FileOutputStream(saveDir)
-                    fo.write(byte.toByteArray())
-                    fo.close()
+        user.profilePicture=savedFile.path
+        sharedPrefEditor.apply {
+            putString(Constants.SHARED_PREF_USER_DATA,Gson().toJson(user))
+            putString(Constants.SHARED_PREF_TOKEN, token)
+            apply()
+        }
 
-                    user.profilePicture=saveDir.path
-                    sharedPrefEditor.apply {
-                        putString(Constants.SHARED_PREF_USER_DATA,Gson().toJson(user))
-                        putString(Constants.SHARED_PREF_TOKEN, token)
-                        apply()
-                    }
-                    startActivity(Intent(this@SignInActivity, MainActivity::class.java))
-                    finish()
-
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-
-                }
-
-            })
 
     }
 
+
+    fun storeImageToDevice(bitmap: Bitmap):File{
+        val byte=ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG,90,byte)
+        var files=ContextCompat.getExternalFilesDirs(this@SignInActivity,null)
+        var baseDir = files[0].path
+        var profilePicDir=File(baseDir+"/Profile_picture")
+
+        if(!profilePicDir.exists()){
+            profilePicDir.mkdir()
+        }
+        var savedFile=File(profilePicDir.path+"/picture.jpg")
+
+        var fo=FileOutputStream(savedFile)
+        fo.write(byte.toByteArray())
+        fo.close()
+        return savedFile
+    }
 
     fun validateLoginDetails(email: String, password: String): Boolean {
 
@@ -168,6 +183,15 @@ class SignInActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    fun showErrorMessage(error:String){
+
+        Toast.makeText(this@SignInActivity,
+            error,Toast.LENGTH_SHORT).show()
+
+
+
     }
 
 

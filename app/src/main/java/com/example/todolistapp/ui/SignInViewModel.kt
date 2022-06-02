@@ -22,7 +22,7 @@ class SignInViewModel
     @Inject
     constructor(val repository: MainRepository,val savedStateHandle: SavedStateHandle) :ViewModel(){
 
-        var tokenLiveData:MutableLiveData<Response<Token>> = MutableLiveData()
+        var tokenLiveData:MutableLiveData<Response<Token>?> = MutableLiveData()
         val userLiveData:MutableLiveData<Response<UserDTO>> = MutableLiveData()
 
     fun loginUser(loginDTO: LoginDTO){
@@ -34,6 +34,7 @@ class SignInViewModel
                 tokenLiveData.value=response
             }
             catch (e:Exception){
+                tokenLiveData.value=null
                 Log.d("TIMEOUT","Connection Timeout")
             }
 
