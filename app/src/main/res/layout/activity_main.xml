@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
 
     tools:context=".ui.activities.MainActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         >
+
         <RelativeLayout
             android:id="@+id/ll_profile_bg"
             android:layout_width="match_parent"
@@ -163,29 +165,43 @@
                         app:layout_constraintLeft_toLeftOf="parent"></TextView>
 
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/imb_add_task"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/plus_circle"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="23dp"
-                        ></ImageView>
+                        android:background="@drawable/plus_circle"></ImageButton>
 
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_tasks"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/item_task"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     tools:itemCount="10"
-                    ></androidx.recyclerview.widget.RecyclerView>
+                    tools:listitem="@layout/item_task"></androidx.recyclerview.widget.RecyclerView>
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
 
+                    android:layout_marginStart="120dp"
+                    android:layout_marginEnd="120dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_drawable"
+                    android:fontFamily="@font/poppins_bold"
+                    android:letterSpacing="0.06"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"></androidx.appcompat.widget.AppCompatButton>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -205,16 +221,14 @@
             android:layout_height="match_parent"
 
             android:background="#8B000000"
-            android:clickable="true"
-            ></View>
+            android:clickable="true"></View>
 
 
         <ProgressBar
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:indeterminateTint="@color/primary"
             android:layout_centerInParent="true"
-            ></ProgressBar>
+            android:indeterminateTint="@color/primary"></ProgressBar>
 
 
     </RelativeLayout>

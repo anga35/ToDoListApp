@@ -1,5 +1,8 @@
 package com.example.todolistapp
 
+import android.app.TimePickerDialog
+import com.example.todolistapp.model.User
+import com.example.todolistapp.retrofit.dto.TaskDoneDTO
 import com.example.todolistapp.retrofit.dto.UserDTO
 
 object Constants {
@@ -11,6 +14,11 @@ object Constants {
 
 
     val RQ_READ_WRITE_PERMISSION=1
+    var taskDoneList=ArrayList<Int>()
+    var userData: User?=null
 
 
+    var selectedDate=0L
+    var selectedTime=0L
 }
+

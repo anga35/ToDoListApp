@@ -2,6 +2,8 @@ package com.example.todolistapp.repository
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.provider.ContactsContract
+import android.util.Log
 import com.example.todolistapp.Constants
 import com.example.todolistapp.model.Token
 import com.example.todolistapp.model.User
@@ -16,6 +18,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.awaitResponse
 
 class MainRepository
 constructor(
@@ -61,6 +64,33 @@ constructor(
         }
 
     }
+
+
+
+
+
+    fun postTaskDone(token:String,pkList:List<Int>)= flow<DataState<Boolean>> {
+        emit(DataState.Loading())
+
+
+            val response=todoRetrofit.taskDone(token,pkList).awaitResponse()
+            if(response.isSuccessful) {
+                emit(DataState.Success(true))
+            }else{
+                emit(DataState.Error())
+            }
+
+
+
+
+
+
+
+    }
+
+
+
+
 
 
 }

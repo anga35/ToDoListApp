@@ -15,9 +15,9 @@ constructor()
    inner class TaskDTOMapper : EntityMapper<TaskDTO, Task> {
         override fun mapToDomain(entity: TaskDTO): Task {
             return Task(
-                id = entity.id,
+                id = entity.id!!,
                 name = entity.name,
-                createDate = entity.createDate,
+                createDate = entity.createDate!!,
                 deadline = entity.deadline,
                 isDone = entity.isDone
 

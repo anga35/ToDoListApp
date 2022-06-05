@@ -156,7 +156,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-    fun storeImageToDevice(bitmap: Bitmap):File{
+    private fun storeImageToDevice(bitmap: Bitmap):File{
         val byte=ByteArrayOutputStream()
 
         bitmap.compress(Bitmap.CompressFormat.PNG,90,byte)
