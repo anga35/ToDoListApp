@@ -25,7 +25,18 @@ constructor()
 
 
         }
+
+        fun mapListToDomain(entityList: List<TaskDTO>):List<Task>{
+           val domainList:ArrayList<Task> = ArrayList()
+           for(entity in entityList){
+               domainList.add(mapToDomain(entity))
+           }
+
+         return domainList
+       }
+
     }
+
 
 
 
@@ -36,7 +47,7 @@ constructor()
                 email = entity.email,
                 fullname = entity.fullname,
                 profilePicture = entity.profilePicture,
-                tasks = entity.tasks!!
+                tasks = TaskDTOMapper().mapListToDomain(entity.tasks!!)
 
             )
 

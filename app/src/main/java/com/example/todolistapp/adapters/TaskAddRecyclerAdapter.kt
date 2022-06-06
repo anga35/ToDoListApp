@@ -35,12 +35,12 @@ class TaskAddRecyclerAdapter constructor(val context:Context,val tasks:ArrayList
 
             val task=tasks[position]
             val taskName=task.name
-            holder.itemView.tv_addTask_name.text=taskName
+
 
             val date=sdf.parse(task.deadline)
+            holder.itemView.tv_addTask_name.text=taskName+" "+deriveRemainingTime(date.time)
 
 
-            holder.itemView.tv_addTask_time.text=deriveRemainingTime(date.time)
             Log.d("RV_TASK",date.time.toString())
 
 
@@ -62,38 +62,44 @@ class TaskAddRecyclerAdapter constructor(val context:Context,val tasks:ArrayList
 
         if(currentTime>timeInMilli){
             remainderTime=currentTime-timeInMilli
-            limit="of deadline exceeded"
+            limit="passed deadline"
         }
         else{
             remainderTime=timeInMilli-currentTime
         }
         val timeInMin= remainderTime/60000
         if(timeInMin<60){
-            return "$timeInMin minutes $limit"
+            if (timeInMin==1L) return "$timeInMin minute $limit" else  return "$timeInMin minutes $limit"
+
         }
         val timeInHr=timeInMin/60
         if(timeInHr<24){
-            return "$timeInHr hours $limit"
+            if(timeInHr==1L) return "$timeInHr hour $limit" else return "$timeInHr hours $limit"
+
         }
         val timeInDays=timeInHr/24
         if(timeInDays<7){
-            return "$timeInDays days $limit"
+            if(timeInDays==1L) return "$timeInDays day $limit" else return "$timeInDays days $limit"
+
         }
 
         val timeInWeeks=timeInDays/7
         if(timeInWeeks<4){
-            return "$timeInWeeks weeks $limit"
+            if(timeInWeeks==1L) return "$timeInWeeks week $limit" else return "$timeInWeeks weeks $limit"
+
         }
 
         val timeInMonths=timeInWeeks/4
         if(timeInMonths<12){
-            return "$timeInMonths months $limit"
+            if(timeInMonths==1L) return "$timeInMonths month $limit" else return "$timeInMonths months $limit"
+
         }
 
         val timeInYears=timeInMonths/12
 
         if(timeInMonths>=12){
-            return "$timeInYears years $limit"
+            if(timeInYears==1L) return "$timeInYears year $limit" else return "$timeInYears years $limit"
+
         }
 
         return "invalid"

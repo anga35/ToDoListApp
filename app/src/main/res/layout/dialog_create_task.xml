@@ -40,7 +40,7 @@
         android:paddingVertical="13dp"
         android:paddingStart="20dp"
         android:textColorHint="#B3000000"
-
+        android:maxLength="30"
         android:textCursorDrawable="@drawable/cursor_drawable"
         android:textSize="12sp"
         android:layout_toLeftOf="@id/imb_calendar"

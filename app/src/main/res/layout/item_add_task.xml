@@ -16,33 +16,23 @@
         android:layout_marginLeft="11dp"
         android:fontFamily="@font/poppins"
         android:letterSpacing="0.06"
-        android:text="Task List"
+        android:text="Task Lists"
+        android:maxLength="50"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="10sp"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@id/imb_delete_task"
+        android:gravity="start"
      ></TextView>
 
 
 
-    <TextView
-        android:id="@+id/tv_addTask_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="3dp"
-        android:fontFamily="@font/poppins"
-        android:letterSpacing="0.06"
-        android:text="in 2 hours"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:layout_toRightOf="@id/tv_addTask_name"
-        ></TextView>
 
 
     <ImageButton
         android:id="@+id/imb_delete_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/ic_baseline_delete_24"
         android:layout_gravity="right"
         android:layout_alignParentEnd="true"

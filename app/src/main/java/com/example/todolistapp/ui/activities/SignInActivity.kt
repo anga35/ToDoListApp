@@ -136,16 +136,22 @@ class SignInActivity : AppCompatActivity() {
 
     }
     private fun downloadUserData(pictureUrl:String, user:User){
-        val futureTarget=Glide.with(this)
-            .asBitmap()
-            .apply(RequestOptions().override(100,100))
-            .load(pictureUrl)
-            .submit(100,100)
-        val bitmap=futureTarget.get()
-       val savedFile= storeImageToDevice(bitmap)
+
+        if(!pictureUrl.isNullOrEmpty()){
+            val futureTarget=Glide.with(this)
+                .asBitmap()
+                .apply(RequestOptions().override(100,100))
+                .load(pictureUrl)
+                .submit(100,100)
+            val bitmap=futureTarget.get()
+            val savedFile= storeImageToDevice(bitmap)
+            user.profilePicture=savedFile.path
+        }
 
 
-        user.profilePicture=savedFile.path
+
+
+
         sharedPrefEditor.apply {
             putString(Constants.SHARED_PREF_USER_DATA,Gson().toJson(user))
             putString(Constants.SHARED_PREF_TOKEN, token)

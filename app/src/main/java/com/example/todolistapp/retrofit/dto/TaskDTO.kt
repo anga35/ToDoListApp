@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 
 class TaskDTO(val id:Int?,val name:String,
-              @SerializedName(value = "create_data")
+              @SerializedName(value = "create_date")
               val createDate:String?,
 
               val deadline:String?,

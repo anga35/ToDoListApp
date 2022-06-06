@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.TimePicker
@@ -32,6 +33,7 @@ import com.example.todolistapp.adapters.TaskOnClickListener
 import com.example.todolistapp.adapters.TaskRecyclerAdapter
 import com.example.todolistapp.model.Task
 import com.example.todolistapp.model.User
+import com.example.todolistapp.retrofit.DTOMapper
 import com.example.todolistapp.retrofit.dto.TaskDTO
 import com.example.todolistapp.ui.MainViewModel
 import com.example.todolistapp.utils.DataState
@@ -134,12 +136,20 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+
+                btn_done_dialog.setOnClickListener {
+                if(taskList.isEmpty()){
+                    dismiss()
+                }
+                    else{
+                        mainViewModel.postNewTask(mainViewModel.getUserToken(),taskList)
+                }
+                }
+
                 btn_cancel_dialog.setOnClickListener {
 
                 }
-                btn_done_dialog.setOnClickListener {
 
-                }
 
 
 
@@ -225,6 +235,33 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+
+        })
+
+        mainViewModel.addTaskState.observe(this, Observer {
+            dataState->
+
+            if (dataState is DataState.Loading){
+                showLoading()
+        }
+            else if(dataState is DataState.Error){
+                Toast.makeText(this,"Could not add new tasks,check your connection and try again",Toast.LENGTH_SHORT).show()
+            }
+            else if(dataState is DataState.Success){
+                val userDto=dataState.data
+                val user=DTOMapper().UserDTOMapper().mapToDomain(userDto)
+                user.profilePicture=Constants.userData!!.profilePicture
+                Constants.userData=user
+                storeUserDataToDevice(user)
+                mainViewModel.loadUserData()
+                doneLoading()
+
+
+            }
+
+
+
+
 
         })
 
