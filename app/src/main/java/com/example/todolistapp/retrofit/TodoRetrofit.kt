@@ -2,10 +2,7 @@ package com.example.todolistapp.retrofit
 
 import com.example.todolistapp.model.Task
 import com.example.todolistapp.model.Token
-import com.example.todolistapp.retrofit.dto.LoginDTO
-import com.example.todolistapp.retrofit.dto.SignupDTO
-import com.example.todolistapp.retrofit.dto.TaskDTO
-import com.example.todolistapp.retrofit.dto.UserDTO
+import com.example.todolistapp.retrofit.dto.*
 import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -25,9 +22,9 @@ interface TodoRetrofit {
     @GET("user/get-user/")
     fun getUser(@Header("AUTHORIZATION") tokenVal:String):Call<UserDTO>
 
-    @FormUrlEncoded
+
     @POST("task/task-done/")
-    fun taskDone(@Header("AUTHORIZATION") tokenVal:String,@Field("pk") doneList: List<Int>):Call<Any>
+    fun taskDone(@Header("AUTHORIZATION") tokenVal:String,@Body taskDoneDTO: TaskDoneDTO):Call<Any>
 
     @POST("task/create/")
     fun taskCreate(@Header("AUTHORIZATION") tokenVal: String,@Body taskList:List<TaskDTO>):Call<UserDTO>

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.DialogCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -42,6 +43,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_create_task.*
+import kotlinx.coroutines.*
 import okhttp3.internal.wait
 import java.text.SimpleDateFormat
 import java.util.*
@@ -185,16 +187,36 @@ class MainActivity : AppCompatActivity() {
 
                     val filteredTask = user.tasks.filter { task -> !task.isDone }
                     rv_tasks.layoutManager = LinearLayoutManager(this)
-                    val adapter = TaskRecyclerAdapter(this, this, filteredTask)
+                    val adapter = TaskRecyclerAdapter(this,  filteredTask,sdfDateTime)
                     adapter.taskOnClickListener = object : TaskOnClickListener {
                         override fun onClick(task: Task) {
                             task.isDone = !task.isDone
+                            if(task.isDone){
+                                Constants.taskDoneList.add(task.id)
+                            }
+                            else{
+                                Constants.taskDoneList.remove(task.id)
+                            }
 
                             adapter.notifyDataSetChanged()
                         }
 
                     }
                     rv_tasks.adapter = adapter
+                    if(!Constants.isTimeLooper){
+                        Constants.isTimeLooper=true
+
+                       lifecycleScope.launch {
+                           while (true){
+                               delay(1000)
+                               withContext(Dispatchers.Main){
+                                   adapter.notifyDataSetChanged()
+                               }
+
+                           }
+                       }
+
+                    }
 
                 }
                 is UserDataState.NewUser -> {

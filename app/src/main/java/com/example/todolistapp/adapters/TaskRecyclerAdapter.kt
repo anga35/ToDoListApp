@@ -11,8 +11,9 @@ import com.example.todolistapp.model.Task
 import com.example.todolistapp.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_task.view.*
+import java.text.SimpleDateFormat
 
-class TaskRecyclerAdapter(val context: Context,val activity: MainActivity,var tasks:List<Task>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TaskRecyclerAdapter(val context: Context,var tasks:List<Task>,val sdf:SimpleDateFormat):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var taskOnClickListener: TaskOnClickListener
 
@@ -23,28 +24,29 @@ class TaskRecyclerAdapter(val context: Context,val activity: MainActivity,var ta
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is TaskViewHolder){
-
+            val mainActivity=context as MainActivity
             val task=tasks[position]
-            val taskName=task.name
+            var taskName=task.name
+            val timeInMillis=sdf.parse(task.deadline).time
+            taskName=taskName+" "+Constants.deriveRemainingTime(timeInMillis,sdf)
+
+
                 holder.itemView.tv_task_name.text=taskName
 
             if(!task.isDone){
-                Constants.taskDoneList.remove(task.id)
+
 
                 holder.itemView.imv_task_check.setImageResource(R.drawable.unchecked_task)
 
                 if(Constants.taskDoneList.isEmpty()){
-                    activity.btn_save.visibility=View.INVISIBLE
+                    mainActivity.btn_save.visibility=View.INVISIBLE
                 }
             }
             else{
 
-
-            Constants.taskDoneList.add(task.id)
-
                 holder.itemView.imv_task_check.setImageResource(R.drawable.checked_task)
-                if(activity.btn_save.visibility==View.INVISIBLE){
-                    activity.btn_save.visibility=View.VISIBLE
+                if(mainActivity.btn_save.visibility==View.INVISIBLE){
+                    mainActivity.btn_save.visibility=View.VISIBLE
 
 
 

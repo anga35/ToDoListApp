@@ -9,10 +9,7 @@ import com.example.todolistapp.model.Token
 import com.example.todolistapp.model.User
 import com.example.todolistapp.retrofit.DTOMapper
 import com.example.todolistapp.retrofit.TodoRetrofit
-import com.example.todolistapp.retrofit.dto.LoginDTO
-import com.example.todolistapp.retrofit.dto.SignupDTO
-import com.example.todolistapp.retrofit.dto.TaskDTO
-import com.example.todolistapp.retrofit.dto.UserDTO
+import com.example.todolistapp.retrofit.dto.*
 import com.example.todolistapp.utils.DataState
 import com.example.todolistapp.utils.UserDataState
 import com.google.gson.Gson
@@ -75,7 +72,7 @@ constructor(
         emit(DataState.Loading())
 
 
-            val response=todoRetrofit.taskDone(token,pkList).awaitResponse()
+            val response=todoRetrofit.taskDone(token, TaskDoneDTO(pkList) ).awaitResponse()
             if(response.isSuccessful) {
                 emit(DataState.Success(true))
             }else{
