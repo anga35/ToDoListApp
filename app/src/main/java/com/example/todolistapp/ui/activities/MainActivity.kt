@@ -178,9 +178,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
         btn_logout.setOnClickListener {
+
+            //Clear all cached data
+
+
+
             sharedPreferences.edit().apply {
 
+
+                Constants.deleteUserProfileImage(this@MainActivity,"Profile_picture")
+                Constants.deleteUserProfileImage(this@MainActivity,"temp_profile")
                 putString(Constants.SHARED_PREF_TOKEN,"")
                 putString(Constants.SHARED_PREF_USER_DATA,"")
                 apply()

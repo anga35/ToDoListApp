@@ -31,6 +31,21 @@ object Constants {
 
     var isTimeLooper=false
 
+    fun deleteUserProfileImage(context: Context,folderName:String){
+
+        var files= ContextCompat.getExternalFilesDirs(context,null)
+        var baseDir = files[0].path
+        var profilePicDir= File(baseDir+"/"+folderName+"/picture.jpg")
+
+        if(profilePicDir.exists()){
+            profilePicDir.delete()
+        }
+
+
+    }
+
+
+
     fun storeImageToDevice(bitmap: Bitmap,context:Context,folderName:String): File {
         val byte= ByteArrayOutputStream()
 
