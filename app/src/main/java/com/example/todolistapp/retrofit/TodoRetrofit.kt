@@ -3,6 +3,7 @@ package com.example.todolistapp.retrofit
 import com.example.todolistapp.model.Task
 import com.example.todolistapp.model.Token
 import com.example.todolistapp.retrofit.dto.*
+import okhttp3.MultipartBody
 import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -29,6 +30,8 @@ interface TodoRetrofit {
     @POST("task/create/")
     fun taskCreate(@Header("AUTHORIZATION") tokenVal: String,@Body taskList:List<TaskDTO>):Call<UserDTO>
 
-
+    @Multipart
+    @POST("user/profile-pic/")
+    fun postProfilePicture(@Header("AUTHORIZATION") tokenVal: String,@Part image :MultipartBody.Part):Call<Any>
 
 }

@@ -15,8 +15,16 @@ import com.example.todolistapp.utils.UserDataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Response
+import retrofit2.awaitResponse
+import java.io.File
 import javax.inject.Inject
+
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -43,6 +51,20 @@ class MainViewModel @Inject constructor(
 
     }
 
+    suspend fun postProfilePic(token: String, file: File):Response<Any>{
+        var response:Response<Any>?=null
+
+            val requestFile: RequestBody =
+
+                file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+            val part=MultipartBody.Part.createFormData("profile_pic", file.name, requestFile)
+             response=repository.postProfilePicture(token, part).awaitResponse()
+
+        return response!!
+
+    }
+
     fun postTaskDone(token: String, taskDoneList: List<Int>) {
 
         val authToken= "Token $token"
@@ -52,8 +74,8 @@ class MainViewModel @Inject constructor(
 
                     postTaskState.value = it
                 }
-            }catch (e:Exception){
-                Log.d("TASK_DONE_ERROR",e.stackTraceToString())
+            }catch (e: Exception){
+                Log.d("TASK_DONE_ERROR", e.stackTraceToString())
                 postTaskState.value=DataState.Error()
             }
         }
@@ -62,17 +84,17 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun postNewTask(token: String,taskList:List<TaskDTO>){
+    fun postNewTask(token: String, taskList: List<TaskDTO>){
 
         val authToken="Token $token"
         viewModelScope.launch {
 
             try{
-                repository.postNewTask(authToken,taskList).collect {
+                repository.postNewTask(authToken, taskList).collect {
                     addTaskState.value=it
                 }
-            }catch (e:Exception){
-                Log.d("TASK_ADD_ERROR",e.stackTraceToString())
+            }catch (e: Exception){
+                Log.d("TASK_ADD_ERROR", e.stackTraceToString())
                 postTaskState.value=DataState.Error()
 
             }
@@ -89,7 +111,7 @@ class MainViewModel @Inject constructor(
 
         repository.sharedPreferences.apply {
 
-             return getString(Constants.SHARED_PREF_TOKEN,"")!!
+             return getString(Constants.SHARED_PREF_TOKEN, "")!!
 
         }
     }

@@ -15,9 +15,11 @@ import com.example.todolistapp.utils.UserDataState
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.awaitResponse
+import java.io.File
 
 class MainRepository
 constructor(
@@ -25,6 +27,7 @@ constructor(
     val todoRetrofit: TodoRetrofit,
     val sharedPreferences: SharedPreferences
 ) {
+
 
 
 
@@ -84,6 +87,18 @@ constructor(
 
 
 
+
+    }
+
+    suspend fun postProfilePicture(token: String,partForm:MultipartBody.Part):Call<Any>{
+    val authToken= "Token $token"
+        var call:Call<Any>?=null
+    CoroutineScope(Dispatchers.IO).launch {
+        call=todoRetrofit.postProfilePicture(authToken,partForm)
+
+    }.join()
+
+return call!!
 
     }
 

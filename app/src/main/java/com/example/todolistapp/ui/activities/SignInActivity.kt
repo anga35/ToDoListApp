@@ -83,8 +83,9 @@ class SignInActivity : AppCompatActivity() {
             if (response.isSuccessful) {
                 Log.d("Success", "User data received")
                 var userDto = response.body()
-                userDto!!.profilePicture = "http://10.0.2.2:8000"+userDto.profilePicture
-
+                if(!userDto!!.profilePicture.isNullOrEmpty()) {
+                    userDto!!.profilePicture = "http://10.0.2.2:8000" + userDto.profilePicture
+                }
 
                 var user=dtoMapper.UserDTOMapper().mapToDomain(userDto)
 
@@ -93,7 +94,7 @@ class SignInActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.IO).launch {
                         downloadUserData(picture,user)
                         startActivity(Intent(this@SignInActivity, MainActivity::class.java))
-                        finish()
+                        finishAffinity()
                     }
 
                 }

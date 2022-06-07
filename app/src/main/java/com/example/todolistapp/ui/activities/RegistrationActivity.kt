@@ -33,6 +33,7 @@ viewModel.controller.observe(this, Observer { response->
             CoroutineScope(Dispatchers.IO).launch {
                 delay(1500)
                 startActivity(Intent(this@RegistrationActivity, SignInActivity::class.java))
+                finish()
             }
         }
         else{

@@ -1,9 +1,15 @@
 package com.example.todolistapp
 
 import android.app.TimePickerDialog
+import android.content.Context
+import android.graphics.Bitmap
+import androidx.core.content.ContextCompat
 import com.example.todolistapp.model.User
 import com.example.todolistapp.retrofit.dto.TaskDoneDTO
 import com.example.todolistapp.retrofit.dto.UserDTO
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 
 object Constants {
@@ -11,7 +17,8 @@ object Constants {
     val SHARED_PREF_TOKEN="SHARED_PREFERENCE_TOKEN_SESSION"
     val SHARED_PREF_NO_CACHE="SHARED_PREFERENCE_NO_CACHE"
     val SHARED_PREF_USER_DATA="SHARED_PREFERENCE_USER_DATA"
-
+    val SHARED_PREF_PROFILE_PIC="SHARED_PREF_PROFILE_PIC"
+    val PROFILE_PIC_RESULT_CODE=1
 
 
     val RQ_READ_WRITE_PERMISSION=1
@@ -24,6 +31,24 @@ object Constants {
 
     var isTimeLooper=false
 
+    fun storeImageToDevice(bitmap: Bitmap,context:Context,folderName:String): File {
+        val byte= ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG,90,byte)
+        var files= ContextCompat.getExternalFilesDirs(context,null)
+        var baseDir = files[0].path
+        var profilePicDir= File(baseDir+"/"+folderName)
+
+        if(!profilePicDir.exists()){
+            profilePicDir.mkdir()
+        }
+        var savedFile= File(profilePicDir.path+"/picture.jpg")
+
+        var fo= FileOutputStream(savedFile)
+        fo.write(byte.toByteArray())
+        fo.close()
+        return savedFile
+    }
 
     fun deriveRemainingTime(timeInMilli:Long,sdf:SimpleDateFormat):String{
 
