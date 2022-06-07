@@ -178,6 +178,21 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        btn_logout.setOnClickListener {
+            sharedPreferences.edit().apply {
+
+                putString(Constants.SHARED_PREF_TOKEN,"")
+                putString(Constants.SHARED_PREF_USER_DATA,"")
+                apply()
+                startActivity(Intent(this@MainActivity,SignInActivity::class.java))
+                finishAffinity()
+
+
+            }
+
+
+        }
+
         mainViewModel.userDataState.observe(this, Observer { dataState ->
             when (dataState) {
                 is UserDataState.UserData -> {
@@ -189,22 +204,6 @@ class MainActivity : AppCompatActivity() {
                         val file = File(user.profilePicture)
                         loadProfilePic(file)
                     }
-//                    Glide.with(this)
-//                        .asBitmap()
-//                        .load(file)
-//                        .into(object : CustomTarget<Bitmap>() {
-//                            override fun onResourceReady(
-//                                resource: Bitmap,
-//                                transition: Transition<in Bitmap>?
-//                            ) {
-//                                imv_profile.setImageBitmap(resource)
-//                            }
-//
-//                            override fun onLoadCleared(placeholder: Drawable?) {
-//
-//                            }
-//                        })
-
                     val filteredTask = user.tasks.filter { task -> !task.isDone }
                     rv_tasks.layoutManager = LinearLayoutManager(this)
                     val adapter = TaskRecyclerAdapter(this, filteredTask, sdfDateTime)
