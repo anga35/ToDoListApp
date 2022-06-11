@@ -2,10 +2,10 @@
 A Full-stack Todolist MVVM  Android app with backend functionality powered by Django backend hosted on Heroku using AWS S3 for storage
 
 ## Functionalities
-Create user account and login
-Store users data on the backend server
-Create tasks while specifying deadlines to be done 
-Caching of data for offline access using Shared Preference and File storage for profile picture 
+- Create user account and login
+- Store users data on the backend server
+- Create tasks while specifying deadlines to be done 
+- Caching of data for offline access using Shared Preference and File storage for profile picture 
 
 
 
