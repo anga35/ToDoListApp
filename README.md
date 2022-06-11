@@ -12,10 +12,10 @@ Caching of data for offline access using Shared Preference and File storage for 
 
 
 
-## Acknowledgements
+# Acknowledgements
 UI Designer:[Madhushan Sasanka](https://www.figma.com/@madhushansasank)
 
-# Libraries:
+## Libraries:
 - Retrofit2
 - DaggerHilt
 
