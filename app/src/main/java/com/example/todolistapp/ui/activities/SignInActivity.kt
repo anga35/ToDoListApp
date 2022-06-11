@@ -119,7 +119,7 @@ class SignInActivity : AppCompatActivity() {
 
         btn_sign_in.setOnClickListener {
             var email = et_sign_in_email.text.toString()
-            email.removeSpaces()
+            email=email.replace(" ","")
             var password = et_sign_in_password.text.toString()
             if (validateLoginDetails(email, password)) {
                 ll_signIn_loading.visibility= View.VISIBLE
