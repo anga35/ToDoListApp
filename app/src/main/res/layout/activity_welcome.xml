@@ -59,8 +59,7 @@
         android:layout_marginTop="13dp"
         android:paddingHorizontal="35dp"
 
-        android:text="Lorem ipsum dolor sit amet,
-         consectetur adipiscing elit.Interdum dictum tempus,interdum at dignissim metus.Ultricies sed nunc."
+        android:text="An online Todolist app for scheduling tasks and storing them online."
         android:letterSpacing="0.06"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
