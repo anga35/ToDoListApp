@@ -20,7 +20,7 @@ UI Designer:[Madhushan Sasanka](https://www.figma.com/@madhushansasank)
 - DaggerHilt
 
 
-##Screenshots
+## Screenshots
 ![Welcome screen](https://github.com/anga35/todo-list-android/blob/master/app/src/main/res/drawable-v24/screen1.jpg)
 
 ![Authentication screen](https://github.com/anga35/todo-list-android/blob/master/app/src/main/res/drawable-v24/screen2.jpg)
