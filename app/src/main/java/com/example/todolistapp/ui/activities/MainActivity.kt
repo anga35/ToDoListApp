@@ -130,10 +130,7 @@ class MainActivity : AppCompatActivity() {
                         timeFormatChar[6] = index.toChar()
                         timeFormat = String(timeFormatChar)
                         taskList.add(TaskDTO(null, inputtedTaskName, null, timeFormat, false))
-
                         emptyDialogInput(this)
-
-
                         val addTaskAdapter =
                             TaskAddRecyclerAdapter(this@MainActivity, taskList, sdfDateTime)
                         addTaskAdapter.taskDeleteOnClickListener =
