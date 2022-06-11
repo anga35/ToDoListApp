@@ -28,16 +28,17 @@ class SignInViewModel
     fun loginUser(loginDTO: LoginDTO){
 
         viewModelScope.launch{
-
+var response:Response<Token>? =null
             try{
-                val response=repository.loginUser(loginDTO).awaitResponse()
-                tokenLiveData.value=response
+                response=repository.loginUser(loginDTO).awaitResponse()
+
             }
             catch (e:Exception){
-                tokenLiveData.value=null
+response=null
+
                 Log.d("TIMEOUT","Connection Timeout")
             }
-
+            tokenLiveData.value=response
 
 
         }

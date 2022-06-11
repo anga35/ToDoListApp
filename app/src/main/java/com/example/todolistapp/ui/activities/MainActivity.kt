@@ -105,12 +105,14 @@ class MainActivity : AppCompatActivity() {
                     val dpd = DatePickerDialog(
                         this@MainActivity,
                         { _, selectedYear, selectedMonth, selectedDay ->
-                            val selectedDate = "$selectedYear-$selectedMonth-$selectedDay"
+                            var selectedDate = "$selectedYear-$selectedMonth-$selectedDay"
                             tv_selected_date.text = selectedDate
                             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                             val date = sdf.parse(selectedDate)
                             Constants.selectedDate = date.time
-                            tv_selected_date.text = selectedDate
+
+
+                            tv_selected_date.text = correctMonthSdf(selectedDate)
                         }, year, month, day
                     ).show()
                 }
@@ -180,14 +182,8 @@ class MainActivity : AppCompatActivity() {
 
 
         btn_logout.setOnClickListener {
-
-            //Clear all cached data
-
-
-
+            //Clear all user cached data
             sharedPreferences.edit().apply {
-
-
                 Constants.deleteUserProfileImage(this@MainActivity,"Profile_picture")
                 Constants.deleteUserProfileImage(this@MainActivity,"temp_profile")
                 putString(Constants.SHARED_PREF_TOKEN,"")
@@ -203,6 +199,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.userDataState.observe(this, Observer { dataState ->
+
+            //Handling various user data states
             when (dataState) {
                 is UserDataState.UserData -> {
 
@@ -213,6 +211,8 @@ class MainActivity : AppCompatActivity() {
                         val file = File(user.profilePicture)
                         loadProfilePic(file)
                     }
+
+                    //Filter tasks to only undone tasks
                     val filteredTask = user.tasks.filter { task -> !task.isDone }
                     rv_tasks.layoutManager = LinearLayoutManager(this)
                     val adapter = TaskRecyclerAdapter(this, filteredTask, sdfDateTime)
@@ -322,16 +322,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun showLoading() {
+    private fun showLoading() {
         ll_loading.visibility = View.VISIBLE
     }
 
-    fun doneLoading() {
+    private fun doneLoading() {
         ll_loading.visibility = View.GONE
     }
 
 
-    fun storeUserDataToDevice(user: User) {
+    private fun storeUserDataToDevice(user: User) {
         var userData = Gson().toJson(user)
 
 
@@ -364,7 +364,7 @@ class MainActivity : AppCompatActivity() {
                 Constants.selectedTime = totalDate
 
 
-                dialog.tv_selected_time.text = totalDate.toString()
+                dialog.tv_selected_time.text = "$selectedHour:$selectedMinute"
 
             },
             hourOfDay,
@@ -401,8 +401,15 @@ class MainActivity : AppCompatActivity() {
 
 val job=lifecycleScope.launch (Dispatchers.IO){
 
+    withContext(Dispatchers.Main){
+        showLoading()
+    }
+
     val response=mainViewModel.postProfilePic(mainViewModel.getUserToken(),
         fileTemp)
+    withContext(Dispatchers.Main){
+       doneLoading()
+    }
     if(response.isSuccessful){
         val file = Constants.storeImageToDevice(bitmap, this@MainActivity,"Profile_picture")
 
@@ -424,6 +431,16 @@ val job=lifecycleScope.launch (Dispatchers.IO){
             }
 
         }
+    }
+
+
+    fun correctMonthSdf(date:String):String{
+
+        val charDate=date.toCharArray()
+        charDate[5]=(charDate[5].toInt()+1).toChar()
+        return String(charDate)
+
+
     }
 
     fun loadProfilePic(file: File) {

@@ -64,7 +64,8 @@ class SignInActivity : AppCompatActivity() {
                     viewModel.getUserData(response.body()!!.token)
                 } else {
                     ll_signIn_loading.visibility=View.GONE
-                    Log.d("Failed", response.body()!!.toString())
+
+                        Log.d("Failed", response.message().toString())
 
                 }
 
@@ -84,7 +85,7 @@ class SignInActivity : AppCompatActivity() {
                 Log.d("Success", "User data received")
                 var userDto = response.body()
                 if(!userDto!!.profilePicture.isNullOrEmpty()) {
-                    userDto!!.profilePicture = "http://10.0.2.2:8000" + userDto.profilePicture
+                    userDto!!.profilePicture = userDto.profilePicture
                 }
 
                 var user=dtoMapper.UserDTOMapper().mapToDomain(userDto)
@@ -118,10 +119,16 @@ class SignInActivity : AppCompatActivity() {
 
         btn_sign_in.setOnClickListener {
             var email = et_sign_in_email.text.toString()
+            email.removeSpaces()
             var password = et_sign_in_password.text.toString()
             if (validateLoginDetails(email, password)) {
                 ll_signIn_loading.visibility= View.VISIBLE
-                viewModel.loginUser(LoginDTO(email, password))
+                try{
+                viewModel.loginUser(LoginDTO(email, password))}
+                catch (e:Exception){
+                    ll_signIn_loading.visibility= View.GONE
+                    Log.d("TIMEOUT","Connection Timeout")
+                }
             }
 
 
@@ -162,6 +169,7 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
+    fun String.removeSpaces()= replace(" ","")
 
     private fun storeImageToDevice(bitmap: Bitmap):File{
         val byte=ByteArrayOutputStream()
